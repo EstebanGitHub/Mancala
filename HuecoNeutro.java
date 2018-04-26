@@ -10,7 +10,7 @@ public class HuecoNeutro {
 	
 	
 	public HuecoNeutro(int identificador) {
-		this.semillas=4;
+		this.semillas=2;
 		this.identificador=identificador;
 	}
 	
