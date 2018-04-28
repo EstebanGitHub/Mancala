@@ -27,7 +27,7 @@ public  class Tablero{
                     huecos_neutros_jugador1[i] = new HuecoNeutro(i+1);
             }
             for (int i=0 ; i<3; i++) {
-                    huecos_neutros_jugador2[i] = new HuecoNeutro(i+1);
+                    huecos_neutros_jugador2[i] = new HuecoNeutro((i+3)+1);
             }
             //Definimos el resto de variables necesarias
             semillas_totales=12;
@@ -39,8 +39,8 @@ public  class Tablero{
         }
         public Tablero(Jugador jugador1, Jugador jugador2,
                 HuecoNeutro[] huecos_neutros_jugador1, HuecoNeutro[] huecos_neutros_jugador2,
-                int turno){ //Constructor para definir la situacion actual
-    
+                int turno){//Constructor para definir la situacion actual
+          
         }
         
 	public void cambioTurno(boolean extra) {
@@ -79,10 +79,10 @@ public  class Tablero{
 				contador++;
 			}
 		}
-            return contador == 6;
+            return contador == 3;
 	}
 	
-	public int definirPosicion(HuecoNeutro hueco) {
+	public int definirPosicionJ1(HuecoNeutro hueco) {
             int resultado = 0;
 		for (int i=0; i<huecos_neutros_jugador1.length;i++){
                     if(comparaHuecos(huecos_neutros_jugador1[i],hueco)) {
@@ -94,8 +94,32 @@ public  class Tablero{
             return resultado;
 	}
         
-        public void roboAlHueco(){
+        public int definirPosicionJ2(HuecoNeutro hueco){
+            int resultado = 0;
+		for (int i=0; i<huecos_neutros_jugador1.length;i++){
+                    if(comparaHuecos(huecos_neutros_jugador2[i],hueco)) {
+                        resultado = i;
+                }else ;
             
+            }
+		
+            return resultado;
+        }
+        
+        public void capturaJ1(HuecoNeutro hueco){//Aquí captura el jugador 1
+           int posicion = definirPosicionJ1(hueco);
+           jugador1.setPuntuacion(jugador1.getPuntuacion()+huecos_neutros_jugador2[posicion].getSemillas()
+           + 1);
+           huecos_neutros_jugador1[posicion].setSemillas(0);
+           huecos_neutros_jugador2[posicion].setSemillas(0);
+        }
+        
+        public void capturaJ2(HuecoNeutro hueco){//Aquí captura el jugador 2
+           int posicion = definirPosicionJ2(hueco);
+           jugador2.setPuntuacion(jugador2.getPuntuacion()+huecos_neutros_jugador1[posicion].getSemillas()
+           + 1);
+           huecos_neutros_jugador1[posicion].setSemillas(0);
+           huecos_neutros_jugador2[posicion].setSemillas(0);
         }
         
         
@@ -104,11 +128,11 @@ public  class Tablero{
 			//Negamos acceso, ya veremos como
 		}else { //Si hemos elegido un hueco valido, empezamos el reparto
 			int valor_actual = hueco.getSemillas();
-			int posicion_actual = definirPosicion(hueco);
+			
                         boolean cambio=false;//Para empezar a sumar a la otra fila de huecos
                         boolean extra=false;//Para los turnos extra
 			if(sucesion_turnos.get(sucesion_turnos.size()-1)==1) {//Caso jugador 1
-                            
+                            int posicion_actual = definirPosicionJ1(hueco);
 				if(todosVaciosJ1(huecos_neutros_jugador1)){
                                     cambioTurno(false);
                                 }
@@ -122,10 +146,16 @@ public  class Tablero{
                                             
                                         }
                                         else if(cambio){
-                                             huecos_neutros_jugador1[posicion_actual+1].setSemillas(huecos_neutros_jugador2[posicion_actual+1].getSemillas()+1);
+                                            //Estamos manipilando el otro lado, aquí no podemos capturar
+                                             huecos_neutros_jugador2[posicion_actual+1].setSemillas(huecos_neutros_jugador2[posicion_actual+1].getSemillas()+1);
                                              posicion_actual++;
                                         }
+                                        else if(i==0 && HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador1[posicion_actual+1])){
+                                            capturaJ1(huecos_neutros_jugador1[posicion_actual+1]);
+                                            posicion_actual++;
+                                        }
                                         else{
+                                            
                                             huecos_neutros_jugador1[posicion_actual+1].setSemillas(huecos_neutros_jugador1[posicion_actual+1].getSemillas()+1);
                                             posicion_actual++;
                                             
@@ -138,6 +168,7 @@ public  class Tablero{
                                 }
 			}
                         if(sucesion_turnos.get(sucesion_turnos.size()-1)==2) {
+                            int posicion_actual = definirPosicionJ2(hueco);
 				if(todosVaciosJ2(huecos_neutros_jugador2)){
                                     cambioTurno(false);
                                 }
@@ -152,10 +183,18 @@ public  class Tablero{
                                             
                                         }
                                         else if(cambio){
-                                             huecos_neutros_jugador1[posicion_actual+1].setSemillas(huecos_neutros_jugador1[posicion_actual+1].getSemillas()+1);
-                                             posicion_actual++;
+                                             //Estamos manipilando el otro lado, aquí no podemos capturar
+                                            
+                                            huecos_neutros_jugador1[posicion_actual+1].setSemillas(huecos_neutros_jugador1[posicion_actual+1].getSemillas()+1);
+                                            posicion_actual++;
+                                             
+                                        }
+                                        else if(i==0 && HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador2[posicion_actual+1])){
+                                            capturaJ2(huecos_neutros_jugador2[posicion_actual+1]);
+                                            posicion_actual++;
                                         }
                                         else{
+                                            
                                             huecos_neutros_jugador2[posicion_actual+1].setSemillas(huecos_neutros_jugador2[posicion_actual+1].getSemillas()+1);
                                             posicion_actual++;
                                             
