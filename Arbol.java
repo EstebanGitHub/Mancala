@@ -134,13 +134,56 @@ public class Arbol {
         }
       
     }
-    //Metodos pendientes, para mostrar los resultados
-    public void imprimirIndices(){
+    
+    public void getIndice(Tablero tablero_nodo){
+        Indice index;
+        boolean existe = false;
+        
+        for (int i=0; i<indexNodos.size(); i++){
+            index = (Indice) indexNodos.get(i);
+            if(index.getTableroNodo().equals(tablero_nodo)){
+                
+                System.out.println("Nodo " + index.getTableroNodo()+ " Preorden [" +
+                        index.getIndexPreOrden()+ "] PostOrden [" + index.getIndexPostOrden() + "]" );
+                existe=true;
+            }
+            
+        }
+        if(!existe) System.out.println("No se ha encontrado el nodo");
+            
         
     }
-    
-    public void imprimirArbol(){
+    //Metodos pendientes, para mostrar los resultados
+    public void imprimirIndices(){
+        Indice index =null;
         
+        System.out.println("numero de indices: " + indexNodos.size());
+        
+        for (int i=0; i<indexNodos.size(); i++){
+            index= (Indice) indexNodos.get(i);
+            System.out.println("Nodo" + index.getTableroNodo() + "PreOrden [" +
+                    index.getIndexPreOrden() + "] PostOrden [" + index.getIndexPostOrden() + "]" );
+        }
+    }
+    
+    public void ImprimirNodos(Nodo nodo_actual){
+        Nodo aux=null;
+        
+        System.out.println("Nodo Padre:" + nodo_actual.getTablero());
+        for (int i=0; i<nodo_actual.hijos.size(); i++){
+            
+            aux=(Nodo) nodo_actual.hijos.get(i);
+            System.out.println("Nodo Padre: " + nodo_actual.getTablero() + "----" +
+                    "Nodo Hijo: " + aux.getTablero());
+            
+            this.ImprimirNodos(aux);
+            
+        }
+    }
+    
+    
+    public void imprimirArbol(Arbol arbol){
+        this.ImprimirNodos(arbol.raiz);
     }
     
     
