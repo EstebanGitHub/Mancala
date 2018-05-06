@@ -33,7 +33,8 @@ public class Arbol {
             raiz=aux;
             this.preorden();
             this.postorden();
-            System.out.println("Raiz iniciada");
+            System.out.println("Raiz iniciada:" );
+            hijo.mostrarTablero();
             
             
         }
@@ -47,7 +48,7 @@ public class Arbol {
         
     }
     
-    public void insertarHijo(Nodo nodo_actual,Tablero padre, Tablero hijo){//Paracualquier otro escenario
+    public void insertarHijo(Nodo nodo_actual,Tablero padre, Tablero hijo){//Para cualquier otro escenario
         
         if (nodo_actual.getTablero().equals(padre)){
             nodo_actual.hijos.add(new Nodo(hijo));
@@ -173,7 +174,7 @@ public class Arbol {
         for (int i=0; i<nodo_actual.hijos.size(); i++){
             
             aux=(Nodo) nodo_actual.hijos.get(i);
-            System.out.println("Nodo Padre: " + nodo_actual.getTablero() + "----" +
+            System.out.println("Nodo Padre: " + nodo_actual.getTablero() + "\n"  +  "----" +
                     "Nodo Hijo: " + aux.getTablero());
             
             this.ImprimirNodos(aux);

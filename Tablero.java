@@ -17,9 +17,11 @@ public  class Tablero{
 	public HuecoNeutro[] huecos_neutros_jugador2=new HuecoNeutro[3];
 	public Jugador jugador1;
 	public Jugador jugador2;
-	public List<Integer> sucesion_turnos;
-	Iterator<Integer> iterador_turnos;
-	public boolean repetir_turno;
+	public List<Integer> sucesion_turnos=new LinkedList<>();
+        int identificador=0;
+        
+	
+        
 
 	public Tablero(){//Constructor para definir el escenario inicial
             //Construimos el escenario de los huecos neutros de ambos jugadores
@@ -34,19 +36,52 @@ public  class Tablero{
             jugador1= new Jugador(1);
             jugador2= new Jugador(2);
             sucesion_turnos = new LinkedList<>();
-            iterador_turnos = sucesion_turnos.iterator();
-            repetir_turno=false;
-        }
-        public Tablero(Jugador jugador1, Jugador jugador2,
-                HuecoNeutro[] huecos_neutros_jugador1, HuecoNeutro[] huecos_neutros_jugador2,
-                int turno){//Constructor para definir la situacion actual
-          
+            sucesion_turnos.add(2);
+            identificador=0;
+           
         }
         
+        public Tablero(HuecoNeutro[] huecos_neutros_jugador1,HuecoNeutro[] huecos_neutros_jugador2,
+                Jugador jugador1,Jugador jugador2,List<Integer> sucesion_turnos,
+                int id){//Constructor para los tableros que se van sucediendo
+            semillas_totales=12;
+            this.setHuecosJ1(huecos_neutros_jugador1);
+            this.setHuecosJ2(huecos_neutros_jugador2);
+            this.setJugador1(jugador1);
+            this.setJugador2(jugador2);
+            this.setSucesionTurnos(sucesion_turnos);
+            this.setId(id);
+            
+            
+        }
+       
+        
+        public void mostrarTablero(){
+            System.out.println("Jugador 1");
+            System.out.println("Puntuacion del jugador 1: " + jugador1.getPuntuacion());
+            System.out.println("Huecos que usa el jugador 1: ");
+            for (int i=0 ; i<3; i++) {
+                   System.out.println("Hueco "+ huecos_neutros_jugador1[i].getId() + ":" 
+                           + huecos_neutros_jugador1[i].getSemillas());
+            }
+            System.out.println("Jugador 2:");
+            System.out.println("Puntuacion del jugador 2: " + jugador2.getPuntuacion());
+            System.out.println("Huecos que usa el jugador 2: ");
+            for (int i=0 ; i<3; i++) {
+                   System.out.println("Hueco "+ huecos_neutros_jugador2[i].getId() + ":" 
+                           + huecos_neutros_jugador2[i].getSemillas());
+            }
+            System.out.println("El turno corresponde a: "+ this.sucesion_turnos.get(sucesion_turnos.size()-1));
+            
+        }
+        
+        
+        
+      
+        
+        
 	public void cambioTurno(boolean extra) {
-		if (sucesion_turnos.isEmpty()) {
-			//Tenemos que ver como iniciamos el primer turno
-		}else if(sucesion_turnos.get(sucesion_turnos.size()-1)==1 && extra==false) {
+		if(sucesion_turnos.get(sucesion_turnos.size()-1)==1 && extra==false) {
 			sucesion_turnos.add(2);
 		}else if(sucesion_turnos.get(sucesion_turnos.size()-1)==1 && extra==true) {//Repeticion de turno
 			sucesion_turnos.add(1);
@@ -56,10 +91,54 @@ public  class Tablero{
 			sucesion_turnos.add(2);
 		}
 	}
+        public int getId(){
+            return identificador;
+        }
+        public void setId(int id){
+            this.identificador=id++;
+        }
+        
+        public HuecoNeutro[] getHuecosJ1(){//Para la CPU
+            return huecos_neutros_jugador1;
+        }
+        public void setHuecosJ1(HuecoNeutro[] huecosJ1){
+            this.huecos_neutros_jugador1 = huecosJ1;
+        }
+        public HuecoNeutro[] getHuecosJ2(){//Para la CPU
+            return huecos_neutros_jugador2;
+        }
+        public void setHuecosJ2(HuecoNeutro[] huecosJ2){//Para la CPU
+            this.huecos_neutros_jugador2 = huecosJ2;
+        }
+        public Jugador getJugador1(){
+             return jugador1;
+        }
+        public Jugador getJugador2(){//Para la CPU
+             return jugador2;
+        }
+        public void setJugador1(Jugador jugador1){
+             this.jugador1=jugador1;
+        }
+        public void setJugador2(Jugador jugador2){//Para la CPU
+             this.jugador2=jugador2;
+        }
+        public List getSucesionTurnos(){
+            return sucesion_turnos;
+        }
+        public void setSucesionTurnos(List turnos){
+            this.sucesion_turnos=turnos;
+        }
+        public int getTurno(){
+            return sucesion_turnos.get(sucesion_turnos.size()-1);
+        }
         
         
+        
+        
+         
+         
         public boolean comparaHuecos(HuecoNeutro hueco1, HuecoNeutro hueco2){
-            return hueco1.getId()==hueco2.getId();
+            return hueco1.getId() == hueco2.getId();
         }
 	
 	public boolean todosVaciosJ1(HuecoNeutro[] huecos_jugador) {
@@ -96,7 +175,7 @@ public  class Tablero{
         
         public int definirPosicionJ2(HuecoNeutro hueco){
             int resultado = 0;
-		for (int i=0; i<huecos_neutros_jugador1.length;i++){
+		for (int i=0; i<huecos_neutros_jugador2.length;i++){
                     if(comparaHuecos(huecos_neutros_jugador2[i],hueco)) {
                         resultado = i;
                 }else ;
@@ -123,9 +202,15 @@ public  class Tablero{
         }
         
         
+        
+        
 	public void elegirHueco(HuecoNeutro hueco) {
-		if(HuecoNeutro.estaHuecoVacio(hueco)) {
-			//Negamos acceso, ya veremos como
+            if (sucesion_turnos.isEmpty()) {
+			//Tenemos que ver como iniciamos el primer turno, de momento...
+                        sucesion_turnos.add(1);
+		}
+            if(HuecoNeutro.estaHuecoVacio(hueco)) {
+			;
 		}else { //Si hemos elegido un hueco valido, empezamos el reparto
 			int valor_actual = hueco.getSemillas();
 			
@@ -139,7 +224,7 @@ public  class Tablero{
                                 else{
                                     for (int i= valor_actual; i>0 ;i--){
                                         if(posicion_actual==2){
-                                            jugador2.setPuntuacion(jugador2.getPuntuacion()+1);
+                                            jugador1.setPuntuacion(jugador1.getPuntuacion()+1);
                                             posicion_actual=0;
                                             cambio = cambio==false;
                                             extra = i==0;
@@ -147,7 +232,7 @@ public  class Tablero{
                                         }
                                         else if(cambio){
                                             //Estamos manipilando el otro lado, aquí no podemos capturar
-                                             huecos_neutros_jugador2[posicion_actual+1].setSemillas(huecos_neutros_jugador2[posicion_actual+1].getSemillas()+1);
+                                             huecos_neutros_jugador2[posicion_actual].setSemillas(huecos_neutros_jugador2[posicion_actual].getSemillas()+1);//Aquí emepezamos desde fuera
                                              posicion_actual++;
                                         }
                                         else if(i==0 && HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador1[posicion_actual+1])){
@@ -167,7 +252,7 @@ public  class Tablero{
                                     cambioTurno(extra);
                                 }
 			}
-                        if(sucesion_turnos.get(sucesion_turnos.size()-1)==2) {
+                        else if(sucesion_turnos.get(sucesion_turnos.size()-1)==2) {
                             int posicion_actual = definirPosicionJ2(hueco);
 				if(todosVaciosJ2(huecos_neutros_jugador2)){
                                     cambioTurno(false);
@@ -176,7 +261,7 @@ public  class Tablero{
                                     
                                     for (int i= valor_actual; i>0 ;i--){
                                         if(posicion_actual==2){
-                                            jugador1.setPuntuacion(jugador1.getPuntuacion()+1);
+                                            jugador2.setPuntuacion(jugador2.getPuntuacion()+1);
                                             posicion_actual=0;
                                             cambio = cambio==false;//Será true o false en funcion al numero de cambios
                                             extra = i==0;
@@ -185,7 +270,7 @@ public  class Tablero{
                                         else if(cambio){
                                              //Estamos manipilando el otro lado, aquí no podemos capturar
                                             
-                                            huecos_neutros_jugador1[posicion_actual+1].setSemillas(huecos_neutros_jugador1[posicion_actual+1].getSemillas()+1);
+                                            huecos_neutros_jugador1[posicion_actual].setSemillas(huecos_neutros_jugador1[posicion_actual].getSemillas()+1);
                                             posicion_actual++;
                                              
                                         }

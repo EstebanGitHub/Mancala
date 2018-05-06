@@ -22,8 +22,11 @@ public class Nodo {
     }
 
     public Tablero getTablero(){
+        
         return this.tablero_nodo;
+        
     }
+    
     
     public void setTablero(Tablero tablero){
         this.tablero_nodo= tablero;

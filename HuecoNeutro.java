@@ -13,6 +13,7 @@ public class HuecoNeutro {
 		this.semillas=2;
 		this.identificador=identificador;
 	}
+        
 	
 	public int getSemillas() {
 		return semillas;
