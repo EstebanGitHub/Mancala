@@ -5,11 +5,13 @@
  */
 package mancala;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Esteban
  */
-public class Indice {
+public class Indice implements Serializable{
     //Vamos a usar este indice para fijar la posicion en la que estamos e ir recooriendo
     
     private int index_preorden=-1;

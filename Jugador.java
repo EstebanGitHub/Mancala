@@ -1,7 +1,9 @@
 
 package mancala;
 
-public class Jugador {
+import java.io.Serializable;
+
+public class Jugador implements Serializable{
 
 	int puntuacion;
         int identificador;

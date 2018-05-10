@@ -5,12 +5,13 @@
  */
 package mancala;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 /**
  *
  * @author Esteban
  */
-public class Nodo {
+public class Nodo implements Serializable{
     
     public ArrayList hijos = new ArrayList();
     public Tablero tablero_nodo; //Aqui esta el tablero que contiene un nodo

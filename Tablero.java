@@ -1,15 +1,17 @@
 
 package mancala;
 
+import java.io.Serializable;
 import java.util.List;
-import java.util.Iterator;
 import java.util.LinkedList;
+import org.apache.commons.lang3.SerializationUtils;
+
 
 /**
  *
  * @author Esteban
  */
-public  class Tablero{
+public  class Tablero implements Serializable{
 	
 	
 	int semillas_totales;
@@ -19,11 +21,13 @@ public  class Tablero{
 	public Jugador jugador2;
 	public List<Integer> sucesion_turnos=new LinkedList<>();
         int identificador=0;
+        public Nodo su_nodo;
+        
         
 	
         
 
-	public Tablero(){//Constructor para definir el escenario inicial
+	public Tablero (){//Constructor para definir el escenario inicial
             //Construimos el escenario de los huecos neutros de ambos jugadores
             for (int i=0 ; i<3; i++) {
                     huecos_neutros_jugador1[i] = new HuecoNeutro(i+1);
@@ -53,7 +57,13 @@ public  class Tablero{
             this.setId(id);
             
             
+            
+            
         }
+       public boolean estaEnNodo(Nodo nodo){
+            return this.equals(nodo.getTablero());
+       }
+       
        
         
         public void mostrarTablero(){
@@ -95,7 +105,7 @@ public  class Tablero{
             return identificador;
         }
         public void setId(int id){
-            this.identificador=id++;
+            this.identificador=id;
         }
         
         public HuecoNeutro[] getHuecosJ1(){//Para la CPU
@@ -227,7 +237,7 @@ public  class Tablero{
                                             jugador1.setPuntuacion(jugador1.getPuntuacion()+1);
                                             posicion_actual=0;
                                             cambio = cambio==false;
-                                            extra = i==0;
+                                            extra = i==1;//ultima iteracion del bucle
                                             
                                         }
                                         else if(cambio){
@@ -235,7 +245,7 @@ public  class Tablero{
                                              huecos_neutros_jugador2[posicion_actual].setSemillas(huecos_neutros_jugador2[posicion_actual].getSemillas()+1);//Aquí emepezamos desde fuera
                                              posicion_actual++;
                                         }
-                                        else if(i==0 && HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador1[posicion_actual+1])){
+                                        else if(i==1 && HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador1[posicion_actual+1])){
                                             capturaJ1(huecos_neutros_jugador1[posicion_actual+1]);
                                             posicion_actual++;
                                         }
@@ -264,7 +274,7 @@ public  class Tablero{
                                             jugador2.setPuntuacion(jugador2.getPuntuacion()+1);
                                             posicion_actual=0;
                                             cambio = cambio==false;//Será true o false en funcion al numero de cambios
-                                            extra = i==0;
+                                            extra = i==1;//Ultima iteracion del bucle
                                             
                                         }
                                         else if(cambio){
@@ -274,7 +284,7 @@ public  class Tablero{
                                             posicion_actual++;
                                              
                                         }
-                                        else if(i==0 && HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador2[posicion_actual+1])){
+                                        else if(i==1 && HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador2[posicion_actual+1])){
                                             capturaJ2(huecos_neutros_jugador2[posicion_actual+1]);
                                             posicion_actual++;
                                         }

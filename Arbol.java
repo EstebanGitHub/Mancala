@@ -5,13 +5,14 @@
  */
 package mancala;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Esteban
  */
-public class Arbol {
+public class Arbol implements Serializable {
     public Nodo raiz;
     Nodo nodoActual;
     private int contPostOrden=0;
@@ -23,6 +24,10 @@ public class Arbol {
 
     public Arbol(){
     raiz=null;
+    }
+    
+    public Arbol(Nodo raiz){
+        this.raiz=raiz;
     }
 
     public void insertarHijo(Tablero padre, Tablero hijo){//Con escenario inicial, desde la raiz
@@ -170,7 +175,7 @@ public class Arbol {
     public void ImprimirNodos(Nodo nodo_actual){
         Nodo aux=null;
         
-        System.out.println("Nodo Padre:" + nodo_actual.getTablero());
+        //System.out.println("Nodo Padre:" + nodo_actual.getTablero());
         for (int i=0; i<nodo_actual.hijos.size(); i++){
             
             aux=(Nodo) nodo_actual.hijos.get(i);

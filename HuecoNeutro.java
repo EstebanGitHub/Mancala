@@ -1,8 +1,10 @@
 
 package mancala;
 
+import java.io.Serializable;
 
-public class HuecoNeutro {
+
+public class HuecoNeutro implements Serializable {
 	
 	int semillas;
 	int identificador;
