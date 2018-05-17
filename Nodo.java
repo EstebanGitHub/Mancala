@@ -17,9 +17,16 @@ public class Nodo implements Serializable{
     public Tablero tablero_nodo; //Aqui esta el tablero que contiene un nodo
     private int pre_orden=0;
     private int post_orden=0;
+    public Nodo padre;
+    
     
     public Nodo(Tablero tablero_nodo){//Constructor que inicializa el nodo con un tablero
         this.setTablero(tablero_nodo);
+    }
+    public ArrayList<Tablero> getHijos(){
+        
+        return this.hijos;
+        
     }
 
     public Tablero getTablero(){
@@ -27,6 +34,14 @@ public class Nodo implements Serializable{
         return this.tablero_nodo;
         
     }
+    public Nodo getPadre(){
+        return padre;
+    }
+    
+     public void setPadre(Nodo padre){
+        this.padre=padre;
+    }
+    
     
     
     public void setTablero(Tablero tablero){
@@ -48,6 +63,8 @@ public class Nodo implements Serializable{
     public void setPreOrden(int pre_orden){
         this.pre_orden=pre_orden;
     }
+    
+   
     
     
 }

@@ -56,7 +56,11 @@ public class Arbol implements Serializable {
     public void insertarHijo(Nodo nodo_actual,Tablero padre, Tablero hijo){//Para cualquier otro escenario
         
         if (nodo_actual.getTablero().equals(padre)){
-            nodo_actual.hijos.add(new Nodo(hijo));
+            Nodo aux=new Nodo(hijo);
+            nodo_actual.hijos.add(aux);
+            aux.setPadre(nodo_actual);
+            aux.getTablero().setSuNodo(aux);
+            
             System.out.println("Nodo insertado");
         }else{
             
@@ -159,6 +163,8 @@ public class Arbol implements Serializable {
             
         
     }
+    
+    
     //Metodos pendientes, para mostrar los resultados
     public void imprimirIndices(){
         Indice index =null;
@@ -191,6 +197,8 @@ public class Arbol implements Serializable {
     public void imprimirArbol(Arbol arbol){
         this.ImprimirNodos(arbol.raiz);
     }
+    
+    
     
     
 

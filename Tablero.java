@@ -21,13 +21,16 @@ public  class Tablero implements Serializable{
 	public Jugador jugador2;
 	public List<Integer> sucesion_turnos=new LinkedList<>();
         int identificador=0;
+        int pasito=0;
+        int valor_poda=0;
         public Nodo su_nodo;
+     
         
         
 	
         
 
-	public Tablero (){//Constructor para definir el escenario inicial
+	public Tablero(){//Constructor para definir el escenario inicial
             //Construimos el escenario de los huecos neutros de ambos jugadores
             for (int i=0 ; i<3; i++) {
                     huecos_neutros_jugador1[i] = new HuecoNeutro(i+1);
@@ -42,6 +45,7 @@ public  class Tablero implements Serializable{
             sucesion_turnos = new LinkedList<>();
             sucesion_turnos.add(2);
             identificador=0;
+            pasito=0;
            
         }
         
@@ -55,14 +59,39 @@ public  class Tablero implements Serializable{
             this.setJugador2(jugador2);
             this.setSucesionTurnos(sucesion_turnos);
             this.setId(id);
-            
+           
             
             
             
         }
-       public boolean estaEnNodo(Nodo nodo){
-            return this.equals(nodo.getTablero());
-       }
+        
+        public int getPasito(){
+            return pasito;
+        }
+        
+        public void setPasito(int pasito){
+            this.pasito=pasito;
+        }
+        
+        
+        public int getValorPoda(){
+            return valor_poda;
+        }
+        
+        public void setValorPoda(int valor_poda){
+            this.valor_poda=valor_poda;
+        }
+        
+        public Nodo getSuNodo(){
+            return su_nodo;
+        }
+        
+        public void setSuNodo(Nodo su_nodo){
+            this.su_nodo=su_nodo;
+        }
+       
+       
+       
        
        
         
@@ -82,6 +111,7 @@ public  class Tablero implements Serializable{
                            + huecos_neutros_jugador2[i].getSemillas());
             }
             System.out.println("El turno corresponde a: "+ this.sucesion_turnos.get(sucesion_turnos.size()-1));
+            System.out.println("Valor Poda:" + this.valor_poda);
             
         }
         
@@ -235,17 +265,18 @@ public  class Tablero implements Serializable{
                                     for (int i= valor_actual; i>0 ;i--){
                                         if(posicion_actual==2){
                                             jugador1.setPuntuacion(jugador1.getPuntuacion()+1);
-                                            posicion_actual=0;
+                                            posicion_actual=-1;
+                                            
                                             cambio = cambio==false;
                                             extra = i==1;//ultima iteracion del bucle
                                             
                                         }
                                         else if(cambio){
                                             //Estamos manipilando el otro lado, aquí no podemos capturar
-                                             huecos_neutros_jugador2[posicion_actual].setSemillas(huecos_neutros_jugador2[posicion_actual].getSemillas()+1);//Aquí emepezamos desde fuera
+                                             huecos_neutros_jugador2[posicion_actual+1].setSemillas(huecos_neutros_jugador2[posicion_actual+1].getSemillas()+1);//Aquí emepezamos desde fuera
                                              posicion_actual++;
                                         }
-                                        else if(i==1 && HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador1[posicion_actual+1])){
+                                        else if(i==1 && HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador1[posicion_actual+1])&&!HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador2[posicion_actual+1])){
                                             capturaJ1(huecos_neutros_jugador1[posicion_actual+1]);
                                             posicion_actual++;
                                         }
@@ -272,7 +303,7 @@ public  class Tablero implements Serializable{
                                     for (int i= valor_actual; i>0 ;i--){
                                         if(posicion_actual==2){
                                             jugador2.setPuntuacion(jugador2.getPuntuacion()+1);
-                                            posicion_actual=0;
+                                            posicion_actual=-1;
                                             cambio = cambio==false;//Será true o false en funcion al numero de cambios
                                             extra = i==1;//Ultima iteracion del bucle
                                             
@@ -280,11 +311,11 @@ public  class Tablero implements Serializable{
                                         else if(cambio){
                                              //Estamos manipilando el otro lado, aquí no podemos capturar
                                             
-                                            huecos_neutros_jugador1[posicion_actual].setSemillas(huecos_neutros_jugador1[posicion_actual].getSemillas()+1);
+                                            huecos_neutros_jugador1[posicion_actual+1].setSemillas(huecos_neutros_jugador1[posicion_actual+1].getSemillas()+1);
                                             posicion_actual++;
                                              
                                         }
-                                        else if(i==1 && HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador2[posicion_actual+1])){
+                                        else if(i==1 && HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador2[posicion_actual+1])&&!HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador1[posicion_actual+1])){
                                             capturaJ2(huecos_neutros_jugador2[posicion_actual+1]);
                                             posicion_actual++;
                                         }
