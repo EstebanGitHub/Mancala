@@ -197,6 +197,18 @@ public class AlgoritmoJuego implements Serializable {
         
     }
     
+    public boolean hayHijos(List<Tablero> padres){
+        int contador=0;
+        for (int i=0; i<padres.size();i++){
+            if(padres.get(i).getSuNodo().getHijos().isEmpty()){
+                ;
+            }else contador++;
+        }
+        
+        return contador!=0;
+    }
+    
+    
     
    
     
@@ -210,10 +222,12 @@ public class AlgoritmoJuego implements Serializable {
           
             
         }
-        
-        
-       
-        for(int i=0; i<3 ; i++){//Aquí da igau de quien tomemos la longuitud,recorre,os huecos
+        if(tablero_inicial.getFinalizado()==true){
+            
+             System.out.println("Deberiamos acabar aqui");
+             
+        }else{
+            for(int i=0; i<3 ; i++){//Aquí da igau de quien tomemos la longuitud,recorre,os huecos
                 
                 Tablero aux= SerializationUtils.clone(tablero_inicial) ;//Necesitamos copia profunda para poder tratar esto de forma recursiva
                 aux.setPasito(0);//Para evitar acumulacion por recursividad
@@ -229,11 +243,7 @@ public class AlgoritmoJuego implements Serializable {
                          tablero_inicial.setPasito(tablero_inicial.getPasito()+1);
                          aux.mostrarTablero();
                          
-                        }    
-                     
-                     
-                     
-                     
+                        }     
                 }
                 else if(aux.getTurno()==2){
                     if(HuecoNeutro.estaHuecoVacio(aux.huecos_neutros_jugador2[i])){
@@ -257,29 +267,50 @@ public class AlgoritmoJuego implements Serializable {
    
         }
         if(escenarios_posibles.isEmpty()){
-            construirArbol();
+            if((tablero_inicial.getTurno()==1 && tablero_inicial.todosVaciosJ1(tablero_inicial.getHuecosJ1()))
+                    || (tablero_inicial.getTurno()==2 && tablero_inicial.todosVaciosJ2(tablero_inicial.getHuecosJ2()))){
+                tablero_inicial.setFinalizado(true);
+                System.out.println("Estoy a true");
+                construirArbol();
+            } else construirArbol();
+            
         }
         
-        else if(nivel<=2&& primer_paso==true){
+        
+        
+        if(nivel<=2&& primer_paso==true){
+                   if(getTablerosPorId(nivel+1,escenarios_posibles).isEmpty()){
+                       System.out.println(listas_de_niveles);
+                       primer_paso=false;
+                   }else{
+                       listas_de_niveles.add(getTablerosPorId(nivel+1,escenarios_posibles));
+                       System.out.println(listas_de_niveles);
+                       primer_paso=false;
+                   }
                    
-                   listas_de_niveles.add(getTablerosPorId(nivel+1,escenarios_posibles));
-                   System.out.println(listas_de_niveles);
-                   primer_paso=false;
         }
-        tablero_inicial=(Tablero)escenarios_posibles.get(0);//definimos nuevo tablero inicial
-        
-        escenarios_posibles.remove(0);
+        if(tablero_inicial.getFinalizado()==true){
+            ;
+        }else{
+             tablero_inicial=(Tablero)escenarios_posibles.get(0);//definimos nuevo tablero inicial
+            System.out.println("holi jijijiji");
+            tablero_inicial.mostrarTablero();
+            escenarios_posibles.remove(0);
+        }
+           
         
         if(escenarios_posibles.isEmpty()||escenarios_posibles.get(0).getId()!=tablero_inicial.getId()&&ultimo_paso==false){
             
-            
+            System.out.println("holi jijijiji");
             nivel++;
             primer_paso=true;
         }
         if(nivel<2){//Control de niveles
-            
+            System.out.println("holi jijijiji");
             construirArbol();
+           
         }else if (nivel==2&&ultimo_paso==false){
+             
             ultimo_paso=true;
             construirArbol();
             
@@ -287,6 +318,9 @@ public class AlgoritmoJuego implements Serializable {
         }else solucion.imprimirArbol(solucion);
        
             
+        }
+        
+        
     }
     public int mayorValor(List<Integer> valores){
         int resultado=0;
@@ -315,6 +349,8 @@ public class AlgoritmoJuego implements Serializable {
         
         return solucion;
     }
+    
+    
     
     public Tablero podaAlfaBeta(){
         Tablero solucion;
@@ -361,6 +397,7 @@ public class AlgoritmoJuego implements Serializable {
         System.out.println(camino.get(camino.size()-1));
         System.out.println(camino.get(camino.size()-1).getValorPoda());
         camino.get(camino.size()-1).mostrarTablero();
+        
         solucion=camino.get(camino.size()-1);
         solucion.setPasito(0);
         solucion.setId(0);
@@ -377,11 +414,18 @@ public class AlgoritmoJuego implements Serializable {
     
     
     public static void main(String args[]){//Para pruebas
-        
-        AlgoritmoJuego prueba=new AlgoritmoJuego();
-        prueba.construirArbol();
-        prueba.fEvaluacion(prueba.getListaNiveles());
-        prueba.tablero_inicial=prueba.podaAlfaBeta();
+        /*Ejemplo de una iteacion del algoritmo,
+        con un tablero inicial, la construccion del arbol, su evaluacion 
+        y su poda*/
+        AlgoritmoJuego prueba=new AlgoritmoJuego();//Constructor del algoritmo
+        prueba.construirArbol();//Con un tablero inicial establecido en pruebs, te crea el arbol de tres niveles o menos sino llega
+        prueba.fEvaluacion(prueba.getListaNiveles());//Asigna un valor de evaluacion a cada elemento de la lista de niveles TENEIS QUE PONEROS CON ESTO
+        prueba.tablero_inicial=prueba.podaAlfaBeta();/*Realiza la poda,
+        queda asegurar que siempre toma un tablero que el oponente pueda utilizar para jugar
+        /*Aquí acaba un ejemplo
+        Devuelve un tablero para el siguiente
+        */
+        //Teneis que trabajar en la interfaz para que pueda trabajar con esto.
         AlgoritmoJuego prueba2=new AlgoritmoJuego();
         prueba2.setNuevoTableroInicial(SerializationUtils.clone(prueba.tablero_inicial));
         prueba2.construirArbol();
@@ -399,7 +443,18 @@ public class AlgoritmoJuego implements Serializable {
         prueba4.fEvaluacion(prueba4.getListaNiveles());
         System.out.println(prueba4.listas_de_niveles);
         prueba4.tablero_inicial=prueba4.podaAlfaBeta();
+        //Ojo al stackOverflow, ocurre cuando llega a un estado (0,0,0)
+        AlgoritmoJuego prueba5=new AlgoritmoJuego();
+        prueba5.setNuevoTableroInicial(SerializationUtils.clone(prueba4.tablero_inicial));
+        prueba5.construirArbol();
+        prueba5.fEvaluacion(prueba5.getListaNiveles());
+        System.out.println(prueba5.listas_de_niveles);
+        prueba5.tablero_inicial=prueba5.podaAlfaBeta();
+   
+         
       
+        
+        
       
         
     }

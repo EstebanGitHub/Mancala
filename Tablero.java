@@ -24,6 +24,7 @@ public  class Tablero implements Serializable{
         int pasito=0;
         int valor_poda=0;
         public Nodo su_nodo;
+        public boolean finalizado=false;
      
         
         
@@ -63,6 +64,12 @@ public  class Tablero implements Serializable{
             
             
             
+        }
+        public boolean getFinalizado(){
+            return this.finalizado;
+        }
+         public void setFinalizado(boolean finalizado){
+            this.finalizado = finalizado;
         }
         
         public int getPasito(){
