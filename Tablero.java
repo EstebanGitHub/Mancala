@@ -25,6 +25,7 @@ public  class Tablero implements Serializable{
         int valor_poda=0;
         public Nodo su_nodo;
         public boolean finalizado=false;
+        int post=0;
      
         
         
@@ -44,7 +45,7 @@ public  class Tablero implements Serializable{
             jugador1= new Jugador(1);
             jugador2= new Jugador(2);
             sucesion_turnos = new LinkedList<>();
-            sucesion_turnos.add(2);
+            sucesion_turnos.add(1);
             identificador=0;
             pasito=0;
            
@@ -234,17 +235,17 @@ public  class Tablero implements Serializable{
         
         public void capturaJ1(HuecoNeutro hueco){//Aquí captura el jugador 1
            int posicion = definirPosicionJ1(hueco);
-           jugador1.setPuntuacion(jugador1.getPuntuacion()+huecos_neutros_jugador2[posicion].getSemillas()
+           jugador1.setPuntuacion(jugador1.getPuntuacion()+huecos_neutros_jugador2[2-posicion].getSemillas()
            + 1);
            huecos_neutros_jugador1[posicion].setSemillas(0);
-           huecos_neutros_jugador2[posicion].setSemillas(0);
+           huecos_neutros_jugador2[2-posicion].setSemillas(0);
         }
         
         public void capturaJ2(HuecoNeutro hueco){//Aquí captura el jugador 2
            int posicion = definirPosicionJ2(hueco);
-           jugador2.setPuntuacion(jugador2.getPuntuacion()+huecos_neutros_jugador1[posicion].getSemillas()
+           jugador2.setPuntuacion(jugador2.getPuntuacion()+huecos_neutros_jugador1[2-posicion].getSemillas()
            + 1);
-           huecos_neutros_jugador1[posicion].setSemillas(0);
+           huecos_neutros_jugador1[2-posicion].setSemillas(0);
            huecos_neutros_jugador2[posicion].setSemillas(0);
         }
         
@@ -283,7 +284,7 @@ public  class Tablero implements Serializable{
                                              huecos_neutros_jugador2[posicion_actual+1].setSemillas(huecos_neutros_jugador2[posicion_actual+1].getSemillas()+1);//Aquí emepezamos desde fuera
                                              posicion_actual++;
                                         }
-                                        else if(i==1 && HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador1[posicion_actual+1])&&!HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador2[posicion_actual+1])){
+                                        else if(i==1 && HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador1[posicion_actual+1])&&!HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador2[1-posicion_actual])){
                                             capturaJ1(huecos_neutros_jugador1[posicion_actual+1]);
                                             posicion_actual++;
                                         }
@@ -322,7 +323,7 @@ public  class Tablero implements Serializable{
                                             posicion_actual++;
                                              
                                         }
-                                        else if(i==1 && HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador2[posicion_actual+1])&&!HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador1[posicion_actual+1])){
+                                        else if(i==1 && HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador2[posicion_actual+1])&&!HuecoNeutro.estaHuecoVacio(huecos_neutros_jugador1[1-posicion_actual])){
                                             capturaJ2(huecos_neutros_jugador2[posicion_actual+1]);
                                             posicion_actual++;
                                         }

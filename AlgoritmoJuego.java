@@ -354,7 +354,7 @@ public class AlgoritmoJuego implements Serializable {
     
     public Tablero podaAlfaBeta(){
         Tablero solucion;
-        List<Tablero>camino=new LinkedList();
+        
         
         //Vamos recorreindo los hijos, con el mismo padre, y con ello vamos al siguiente nivel
         for(int i=listas_de_niveles.size()-1; i>0 ;i--){//Recorremos cada nivel
@@ -379,31 +379,11 @@ public class AlgoritmoJuego implements Serializable {
         System.out.println(cosa);
         int el_elegido_val= mayorValor(cosa.get(0));
         Tablero el_elegido_tab=listas_de_niveles.get(0).get(cosa.get(0).indexOf(el_elegido_val));
-        camino.add(el_elegido_tab);
-        for(int i=0; i<listas_de_niveles.size()-1 ;i++){
-            List<Nodo> hijos = el_elegido_tab.getSuNodo().hijos;
-            if (hijos.isEmpty()){
-                ;
-            }else{
-                List<Integer> valores_hijos = getValoresLista(hijos);
-                Tablero nuevo_elegido=hijos.get(valores_hijos.indexOf(el_elegido_val)).getTablero();
-                camino.add(nuevo_elegido);
-                el_elegido_tab=nuevo_elegido;
-            }
-            
-                    
-            
-        }
-        System.out.println(camino.get(camino.size()-1));
-        System.out.println(camino.get(camino.size()-1).getValorPoda());
-        camino.get(camino.size()-1).mostrarTablero();
-        
-        solucion=camino.get(camino.size()-1);
-        solucion.setPasito(0);
-        solucion.setId(0);
-        nivel=0;
-        
-        return solucion;
+        el_elegido_tab.setId(0);
+        el_elegido_tab.setPasito(0);
+        System.out.println(el_elegido_tab);
+        el_elegido_tab.mostrarTablero();
+        return el_elegido_tab;
     }
     
    
@@ -418,15 +398,16 @@ public class AlgoritmoJuego implements Serializable {
         con un tablero inicial, la construccion del arbol, su evaluacion 
         y su poda*/
         AlgoritmoJuego prueba=new AlgoritmoJuego();//Constructor del algoritmo
+        prueba.tablero_inicial.elegirHueco(prueba.tablero_inicial.huecos_neutros_jugador1[2]);
         prueba.construirArbol();//Con un tablero inicial establecido en pruebs, te crea el arbol de tres niveles o menos sino llega
         prueba.fEvaluacion(prueba.getListaNiveles());//Asigna un valor de evaluacion a cada elemento de la lista de niveles TENEIS QUE PONEROS CON ESTO
-        prueba.tablero_inicial=prueba.podaAlfaBeta();/*Realiza la poda,
+        prueba.tablero_inicial=prueba.podaAlfaBeta();/*Realiza la poda
         queda asegurar que siempre toma un tablero que el oponente pueda utilizar para jugar
         /*Aquí acaba un ejemplo
         Devuelve un tablero para el siguiente
         */
         //Teneis que trabajar en la interfaz para que pueda trabajar con esto.
-        AlgoritmoJuego prueba2=new AlgoritmoJuego();
+        /*AlgoritmoJuego prueba2=new AlgoritmoJuego();
         prueba2.setNuevoTableroInicial(SerializationUtils.clone(prueba.tablero_inicial));
         prueba2.construirArbol();
         prueba2.fEvaluacion(prueba2.getListaNiveles());
@@ -449,7 +430,7 @@ public class AlgoritmoJuego implements Serializable {
         prueba5.construirArbol();
         prueba5.fEvaluacion(prueba5.getListaNiveles());
         System.out.println(prueba5.listas_de_niveles);
-        prueba5.tablero_inicial=prueba5.podaAlfaBeta();
+        prueba5.tablero_inicial=prueba5.podaAlfaBeta();*/
    
          
       

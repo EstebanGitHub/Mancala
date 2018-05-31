@@ -32,6 +32,7 @@ public class Interfaz extends JFrame  {
 	int numFichasIni = 2;
 	JPanelConFondo fondoFinJuego;
 	Color caoba = new Color(95,32,0);
+        private boolean fin = false;
 
 	private Interfaz() {
 		setLayout(null);
@@ -57,9 +58,9 @@ public class Interfaz extends JFrame  {
 		huecoFichas1 = new HuecoNeutro(1);
 		huecoFichas2 = new HuecoNeutro(2);
 		huecoFichas3 = new HuecoNeutro(3);
-		huecoFichas4 = new HuecoNeutro(4);
-		huecoFichas5 = new HuecoNeutro(5);
-		huecoFichas6 = new HuecoNeutro(6);
+		huecoFichas4 = new HuecoNeutro(1);
+		huecoFichas5 = new HuecoNeutro(2);
+		huecoFichas6 = new HuecoNeutro(3);
 		huecoFichasJ1 = new HuecoNeutro(0);
 		huecoFichasJ1.setSemillas(0);
 		huecoFichasJ2 = new HuecoNeutro(-1);
@@ -137,21 +138,21 @@ public class Interfaz extends JFrame  {
         });
 		boton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+               
             }
         });
 		boton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                
             }
         });
 		boton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                
             }
         });
 		
-		//Añadimos todos los componentes a la ventana
+		//Aï¿½adimos todos los componentes a la ventana
 		add(fichasJ1);
 		add(fichas1);
 		add(fichas2);
@@ -187,7 +188,7 @@ public class Interfaz extends JFrame  {
 	
 	// Acciones que se realizan al pulsar los botones
 	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-		if(tableroIni.getTurno() == 1) {
+		if(tableroIni.getTurno() == 1 && fin==false) {
 		tableroIni.elegirHueco(tableroIni.getHuecosJ1()[0]);
 		
 		fichas1.setText("");
@@ -216,11 +217,45 @@ public class Interfaz extends JFrame  {
 
 		tableroIni.mostrarTablero();
 		}
+                if(tableroIni.getTurno()==2 && fin==false){
+                    AlgoritmoJuego prueba=new AlgoritmoJuego();//Constructor del algoritmo
+                    prueba.setNuevoTableroInicial(tableroIni);
+                    prueba.construirArbol();//Con un tablero inicial establecido en pruebs, te crea el arbol de tres niveles o menos sino llega
+                    prueba.fEvaluacion(prueba.getListaNiveles());//Asigna un valor de evaluacion a cada elemento de la lista de niveles TENEIS QUE PONEROS CON ESTO
+                    prueba.tablero_inicial=prueba.podaAlfaBeta();
+                    tableroIni=prueba.tablero_inicial;
+                    
+                    fichas1.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ1()[0].getSemillas(), fichas1);
+		
+		fichas2.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ1()[1].getSemillas(), fichas2);
+		
+		fichas3.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ1()[2].getSemillas(), fichas3);
+		
+		fichas4.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ2()[0].getSemillas(), fichas4);
+
+		fichas5.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ2()[1].getSemillas(), fichas5);
+		
+		fichas6.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ2()[2].getSemillas(), fichas6);
+		
+		fichasJ1.setText("");
+		append(Color.BLACK, "" + tableroIni.getJugador1().getPuntuacion(), fichasJ1);
+
+		fichasJ2.setText("");
+		append(Color.BLACK, "" + tableroIni.getJugador2().getPuntuacion(), fichasJ2);
+                    
+                }
+
 		finJuego();
 		
     }
 	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-		if(tableroIni.getTurno() == 1) {
+		if(tableroIni.getTurno() == 1 && fin==false) {
 		tableroIni.elegirHueco(tableroIni.getHuecosJ1()[1]);
 		
 
@@ -251,10 +286,44 @@ public class Interfaz extends JFrame  {
 		tableroIni.mostrarTablero();
 		}
 		finJuego();
+                if(tableroIni.getTurno()==2 && fin==false){
+                    AlgoritmoJuego prueba=new AlgoritmoJuego();//Constructor del algoritmo
+                    prueba.setNuevoTableroInicial(tableroIni);
+                    prueba.construirArbol();//Con un tablero inicial establecido en pruebs, te crea el arbol de tres niveles o menos sino llega
+                    prueba.fEvaluacion(prueba.getListaNiveles());//Asigna un valor de evaluacion a cada elemento de la lista de niveles TENEIS QUE PONEROS CON ESTO
+                    prueba.tablero_inicial=prueba.podaAlfaBeta();
+                    tableroIni=prueba.tablero_inicial;
+                    
+                    fichas1.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ1()[0].getSemillas(), fichas1);
+		
+		fichas2.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ1()[1].getSemillas(), fichas2);
+		
+		fichas3.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ1()[2].getSemillas(), fichas3);
+		
+		fichas4.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ2()[0].getSemillas(), fichas4);
+
+		fichas5.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ2()[1].getSemillas(), fichas5);
+		
+		fichas6.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ2()[2].getSemillas(), fichas6);
+		
+		fichasJ1.setText("");
+		append(Color.BLACK, "" + tableroIni.getJugador1().getPuntuacion(), fichasJ1);
+
+		fichasJ2.setText("");
+		append(Color.BLACK, "" + tableroIni.getJugador2().getPuntuacion(), fichasJ2);
+                tableroIni.mostrarTablero();   
+                }
+
 		
     }
 	private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
-		if(tableroIni.getTurno() == 1) {
+		if(tableroIni.getTurno() == 1&& fin==false) {
 		tableroIni.elegirHueco(tableroIni.getHuecosJ1()[2]);
 		
 
@@ -284,15 +353,15 @@ public class Interfaz extends JFrame  {
 
 		tableroIni.mostrarTablero();
 		}
-		finJuego();
-		
-    }
-	private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
-		if(tableroIni.getTurno() == 2) {
-		tableroIni.elegirHueco(tableroIni.getHuecosJ2()[0]);
-		
-
-		fichas1.setText("");
+                if(tableroIni.getTurno()==2&& fin==false){
+                    AlgoritmoJuego prueba=new AlgoritmoJuego();//Constructor del algoritmo
+                    prueba.setNuevoTableroInicial(tableroIni);
+                    prueba.construirArbol();//Con un tablero inicial establecido en pruebs, te crea el arbol de tres niveles o menos sino llega
+                    prueba.fEvaluacion(prueba.getListaNiveles());//Asigna un valor de evaluacion a cada elemento de la lista de niveles TENEIS QUE PONEROS CON ESTO
+                    prueba.tablero_inicial=prueba.podaAlfaBeta();
+                    tableroIni=prueba.tablero_inicial;
+                    
+                    fichas1.setText("");
 		append(Color.BLACK, "" + tableroIni.getHuecosJ1()[0].getSemillas(), fichas1);
 		
 		fichas2.setText("");
@@ -315,79 +384,16 @@ public class Interfaz extends JFrame  {
 
 		fichasJ2.setText("");
 		append(Color.BLACK, "" + tableroIni.getJugador2().getPuntuacion(), fichasJ2);
+                    
+                }
 
-		tableroIni.mostrarTablero();
-		}
+                
 		finJuego();
+                
 		
     }
-	private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
-		if(tableroIni.getTurno() == 2) {
-		tableroIni.elegirHueco(tableroIni.getHuecosJ2()[1]);
-		
-
-		fichas1.setText("");
-		append(Color.BLACK, "" + tableroIni.getHuecosJ1()[0].getSemillas(), fichas1);
-		
-		fichas2.setText("");
-		append(Color.BLACK, "" + tableroIni.getHuecosJ1()[1].getSemillas(), fichas2);
-		
-		fichas3.setText("");
-		append(Color.BLACK, "" + tableroIni.getHuecosJ1()[2].getSemillas(), fichas3);
-		
-		fichas4.setText("");
-		append(Color.BLACK, "" + tableroIni.getHuecosJ2()[0].getSemillas(), fichas4);
-
-		fichas5.setText("");
-		append(Color.BLACK, "" + tableroIni.getHuecosJ2()[1].getSemillas(), fichas5);
-		
-		fichas6.setText("");
-		append(Color.BLACK, "" + tableroIni.getHuecosJ2()[2].getSemillas(), fichas6);
-		
-		fichasJ1.setText("");
-		append(Color.BLACK, "" + tableroIni.getJugador1().getPuntuacion(), fichasJ1);
-
-		fichasJ2.setText("");
-		append(Color.BLACK, "" + tableroIni.getJugador2().getPuntuacion(), fichasJ2);
-
-		tableroIni.mostrarTablero();
-		}
-		finJuego();
-		
-    }
-	private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {
-		if(tableroIni.getTurno() == 2) {
-		tableroIni.elegirHueco(tableroIni.getHuecosJ2()[2]);
-		
-
-		fichas1.setText("");
-		append(Color.BLACK, "" + tableroIni.getHuecosJ1()[0].getSemillas(), fichas1);
-		
-		fichas2.setText("");
-		append(Color.BLACK, "" + tableroIni.getHuecosJ1()[1].getSemillas(), fichas2);
-		
-		fichas3.setText("");
-		append(Color.BLACK, "" + tableroIni.getHuecosJ1()[2].getSemillas(), fichas3);
-		
-		fichas4.setText("");
-		append(Color.BLACK, "" + tableroIni.getHuecosJ2()[0].getSemillas(), fichas4);
-
-		fichas5.setText("");
-		append(Color.BLACK, "" + tableroIni.getHuecosJ2()[1].getSemillas(), fichas5);
-		
-		fichas6.setText("");
-		append(Color.BLACK, "" + tableroIni.getHuecosJ2()[2].getSemillas(), fichas6);
-		
-		fichasJ1.setText("");
-		append(Color.BLACK, "" + tableroIni.getJugador1().getPuntuacion(), fichasJ1);
-
-		fichasJ2.setText("");
-		append(Color.BLACK, "" + tableroIni.getJugador2().getPuntuacion(), fichasJ2);
-
-		tableroIni.mostrarTablero();
-		}
-		finJuego();
-    }
+        
+        
 	private void cargarImagenes() {
         Image imagenInterna = new ImageIcon(
            getClass().getResource("src/Imagenes/Fin_del_Juego_Spidey.png")).getImage();
@@ -398,7 +404,7 @@ public class Interfaz extends JFrame  {
 	private void finJuego() {
 		if(tableroIni.todosVaciosJ1(tableroIni.getHuecosJ1())
 				|| tableroIni.todosVaciosJ2(tableroIni.huecos_neutros_jugador2)) {
-			
+			fin=true;
 			System.out.println("EL JUEGO SE HA ACABADO");
 			
 		}
