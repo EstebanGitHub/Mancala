@@ -147,12 +147,12 @@ public List<List<Integer>> fEvaluacion(List<List<Tablero>> lista){//Funcional, c
                         H3=sumaSemillasJugador1(lista.get(i).get(k));
                         for(int u=0; u<lista.get(i).get(k).getHuecosJ1().length;u++){
                             if (lista.get(i).get(k).getHuecosJ1()[u].getSemillas()>=3-u){
-                                H4=H4+5;
+                                H4=H4-5;
                             }
                         }
                         for(int u=0; u<lista.get(i).get(k).getHuecosJ2().length;u++){
                             if (lista.get(i).get(k).getHuecosJ2()[u].getSemillas()>=3-u){
-                                H5=H5-5;
+                                H5=H5+5;
                             }
                         }
                         

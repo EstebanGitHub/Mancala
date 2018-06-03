@@ -414,7 +414,7 @@ public class Interfaz_1 extends JFrame  {
                     append(Color.BLACK, "", explicaciones);
                 }
                 
-                
+                finJuego();
                 tableroIni.mostrarTablero();   
                 }
 
@@ -454,7 +454,7 @@ public class Interfaz_1 extends JFrame  {
                 
                 
                 
-
+                finJuego();
 		tableroIni.mostrarTablero();
 		}
                 if(tableroIni.getTurno()==2&& fin==false){
@@ -501,7 +501,7 @@ public class Interfaz_1 extends JFrame  {
                     append(Color.BLACK, "", explicaciones);
                 }
                 
-                
+                finJuego();
                 }
 
                 
@@ -517,14 +517,75 @@ public class Interfaz_1 extends JFrame  {
 		fondoFinJuego.setImagen(imagenInterna);
 
     }    
-	
+	private boolean reanudable(){
+            boolean reanudar=false;
+            if(tableroIni.getTurno()==1){
+                for(int i=0; i<tableroIni.getHuecosJ1().length;i++){
+                    if(tableroIni.getHuecosJ1()[i].getSemillas()>3-i){
+                        reanudar=true;
+                    }
+                }
+            }else if(tableroIni.getTurno()==2){
+                for(int i=0; i<tableroIni.getHuecosJ2().length;i++){
+                    if(tableroIni.getHuecosJ2()[i].getSemillas()>3-i){
+                        reanudar=true;
+                    }
+                }
+            }
+            return reanudar;
+        }
 	private void finJuego() {
-		if(tableroIni.todosVaciosJ1(tableroIni.getHuecosJ1())
-				|| tableroIni.todosVaciosJ2(tableroIni.huecos_neutros_jugador2)) {
+		if((tableroIni.todosVaciosJ1(tableroIni.getHuecosJ1())
+				|| tableroIni.todosVaciosJ2(tableroIni.getHuecosJ2()))&&!(reanudable())){
 			fin=true;
 			System.out.println("EL JUEGO SE HA ACABADO");
+                        if(tableroIni.getTurno()==1){//Esto significa que no tiene nada con lo que jgar, todo esta en 2
+                            int añadir=0;
+                            for(int i=0; i<tableroIni.getHuecosJ2().length;i++){
+                                añadir=añadir+tableroIni.getHuecosJ2()[i].getSemillas();
+                                tableroIni.getHuecosJ2()[i].setSemillas(0);
+                            }
+                            tableroIni.getJugador2().setPuntuacion(tableroIni.getJugador2().getPuntuacion()+añadir);
+                        }else if(tableroIni.getTurno()==2){//todo está en 1
+                            int añadir=0;
+                            for(int i=0; i<tableroIni.getHuecosJ1().length;i++){
+                                añadir=añadir+tableroIni.getHuecosJ1()[i].getSemillas();
+                                tableroIni.getHuecosJ1()[i].setSemillas(0);
+                            }
+                            tableroIni.getJugador1().setPuntuacion(tableroIni.getJugador1().getPuntuacion()+añadir);
+                        }
+                        fichas1.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ1()[0].getSemillas(), fichas1);
+		
+		fichas2.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ1()[1].getSemillas(), fichas2);
+		
+		fichas3.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ1()[2].getSemillas(), fichas3);
+		
+		fichas4.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ2()[0].getSemillas(), fichas4);
+
+		fichas5.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ2()[1].getSemillas(), fichas5);
+		
+		fichas6.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ2()[2].getSemillas(), fichas6);
+		
+		fichasJ1.setText("");
+		append(Color.BLACK, "" + tableroIni.getJugador1().getPuntuacion(), fichasJ1);
+
+		fichasJ2.setText("");
+		append(Color.BLACK, "" + tableroIni.getJugador2().getPuntuacion(), fichasJ2);
+                
+                turno.setText("");
+                append(Color.BLACK, "" + tableroIni.getTurno(), turno);
+                
+                        
+                                                                
 			
 		}
+                
 		
 	}
 	
