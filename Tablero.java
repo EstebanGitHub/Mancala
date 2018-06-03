@@ -26,6 +26,7 @@ public  class Tablero implements Serializable{
         public Nodo su_nodo;
         public boolean finalizado=false;
         int post=0;
+        boolean de_captura=false;
      
         
         
@@ -65,6 +66,9 @@ public  class Tablero implements Serializable{
             
             
             
+        }
+        public boolean hayCaptura(){
+            return de_captura;
         }
         public boolean getFinalizado(){
             return this.finalizado;
@@ -239,6 +243,7 @@ public  class Tablero implements Serializable{
            + 1);
            huecos_neutros_jugador1[posicion].setSemillas(0);
            huecos_neutros_jugador2[2-posicion].setSemillas(0);
+           de_captura=true;
         }
         
         public void capturaJ2(HuecoNeutro hueco){//Aquí captura el jugador 2
@@ -247,6 +252,7 @@ public  class Tablero implements Serializable{
            + 1);
            huecos_neutros_jugador1[2-posicion].setSemillas(0);
            huecos_neutros_jugador2[posicion].setSemillas(0);
+           de_captura=true;
         }
         
         

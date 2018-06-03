@@ -114,9 +114,21 @@ public class AlgoritmoJuego implements Serializable {
             return resultado;
         }
     
-    public List<List<Integer>> fEvaluacion(List<List<Tablero>> lista){//Funcional, criterio muy pobre todavía
+public List<List<Integer>> fEvaluacion(List<List<Tablero>> lista){//Funcional, criterio muy pobre todavía
         //La idea es ver que tablero tiene mas semilla disponiles para el jugador que le toca,
         //a la CPU le interesa tener mas semillas y si es el tuerno del humano a la CPU le interesa que tenga menos
+       //H1: distancia con respecto a mi contrincante
+       int H1=0;
+       //H2: Piedras cerca de mi mancala
+       int H2=0;
+       //H3: Piedras cerca del mancala de mi contrincante
+       int H3=0;
+       //H4: Movimientos con los que gano una pieza
+       int H4=0;
+       //H5: Movimientos con los que el otro gana una pieza
+       int H5=0;
+       //H6: Turno extra mio
+       int H6=0;
        
         
         int valor_actual=0;
@@ -129,12 +141,55 @@ public class AlgoritmoJuego implements Serializable {
             if (i==lista.size()-1){
                 for(int k=0;k<lista.get(i).size();k++){
                     if (lista.get(i).get(k).getTurno()==1){
-                        valor_actual=sumaSemillasJugador1(lista.get(i).get(k));
-                        lista.get(i).get(k).setValorPoda(12-valor_actual);
-                        lista_nivel.add(12-valor_actual);
+                        
+                        H1=lista.get(i).get(k).getJugador1().getPuntuacion()-lista.get(i).get(k).getJugador2().getPuntuacion();
+                        H2=sumaSemillasJugador2(lista.get(i).get(k));
+                        H3=sumaSemillasJugador1(lista.get(i).get(k));
+                        for(int u=0; u<lista.get(i).get(k).getHuecosJ1().length;u++){
+                            if (lista.get(i).get(k).getHuecosJ1()[u].getSemillas()>=3-u){
+                                H4=H4+5;
+                            }
+                        }
+                        for(int u=0; u<lista.get(i).get(k).getHuecosJ2().length;u++){
+                            if (lista.get(i).get(k).getHuecosJ2()[u].getSemillas()>=3-u){
+                                H5=H5-5;
+                            }
+                        }
+                        
+                        if(!(lista.get(i).get(k).equals(lista.get(i).get(k).getSuNodo().getPadre().getTablero()))&&
+                                (lista.get(i).get(k).getTurno()==lista.get(i).get(k).getSuNodo().getPadre().getTablero().getTurno())){
+                            H6=0;
+                            
+                        }
+                        
+                        
+                        valor_actual=H1-H2+H3+H4+H5+H6;
+                        lista.get(i).get(k).setValorPoda(valor_actual);
+                        lista_nivel.add(valor_actual);
                     }
                     else if(lista.get(i).get(k).getTurno()==2){
-                        valor_actual=sumaSemillasJugador2(lista.get(i).get(k));
+                        H1=lista.get(i).get(k).getJugador2().getPuntuacion()-lista.get(i).get(k).getJugador1().getPuntuacion();
+                        H2=sumaSemillasJugador1(lista.get(i).get(k));
+                        H3=sumaSemillasJugador2(lista.get(i).get(k));
+                        for(int u=0; u<lista.get(i).get(k).getHuecosJ1().length;u++){
+                            if (lista.get(i).get(k).getHuecosJ1()[u].getSemillas()>=3-u){
+                                H4=H4-5;
+                            }
+                        }
+                        for(int u=0; u<lista.get(i).get(k).getHuecosJ2().length;u++){
+                            if (lista.get(i).get(k).getHuecosJ2()[u].getSemillas()>=3-u){
+                                H5=H5+5;
+                            }
+                        }
+                        
+                        if(!(lista.get(i).get(k).equals(lista.get(i).get(k).getSuNodo().getPadre().getTablero()))&&
+                                (lista.get(i).get(k).getTurno()==lista.get(i).get(k).getSuNodo().getPadre().getTablero().getTurno())){
+                            H6=100;
+                            
+                        }
+                        
+                        
+                        valor_actual=H1-H2+H3+H4+H5+H6;
                         lista.get(i).get(k).setValorPoda(valor_actual);
                         lista_nivel.add(valor_actual);
                     }
@@ -148,12 +203,55 @@ public class AlgoritmoJuego implements Serializable {
             }else{
                 for(int k=0;k<lista.get(i).size();k++){
                     if (lista.get(i).get(k).getTurno()==1){
-                        valor_actual=sumaSemillasJugador1(lista.get(i).get(k));
-                        lista_nivel.add(12-valor_actual);
+                        H1=lista.get(i).get(k).getJugador1().getPuntuacion()-lista.get(i).get(k).getJugador2().getPuntuacion();
+                        H2=sumaSemillasJugador2(lista.get(i).get(k));
+                        H3=sumaSemillasJugador1(lista.get(i).get(k));
+                        for(int u=0; u<lista.get(i).get(k).getHuecosJ1().length;u++){
+                            if (lista.get(i).get(k).getHuecosJ1()[u].getSemillas()>=3-u){
+                                H4=H4+5;
+                            }
+                        }
+                        for(int u=0; u<lista.get(i).get(k).getHuecosJ2().length;u++){
+                            if (lista.get(i).get(k).getHuecosJ2()[u].getSemillas()>=3-u){
+                                H5=H5-5;
+                            }
+                        }
+                        
+                        if(!(lista.get(i).get(k).equals(lista.get(i).get(k).getSuNodo().getPadre().getTablero()))&&
+                                (lista.get(i).get(k).getTurno()==lista.get(i).get(k).getSuNodo().getPadre().getTablero().getTurno())){
+                            H6=0;
+                            
+                        }
+                        
+                        
+                        valor_actual=H1-H2+H3+H4+H5+H6;
+                        
+                        lista_nivel.add(valor_actual);
                     }
                     else if(lista.get(i).get(k).getTurno()==2){
                         
-                        valor_actual=sumaSemillasJugador2(lista.get(i).get(k));
+                        H1=lista.get(i).get(k).getJugador2().getPuntuacion()-lista.get(i).get(k).getJugador1().getPuntuacion();
+                        H2=sumaSemillasJugador1(lista.get(i).get(k));
+                        H3=sumaSemillasJugador2(lista.get(i).get(k));
+                        for(int u=0; u<lista.get(i).get(k).getHuecosJ1().length;u++){
+                            if (lista.get(i).get(k).getHuecosJ1()[u].getSemillas()>=3-u){
+                                H4=H4-5;
+                            }
+                        }
+                        for(int u=0; u<lista.get(i).get(k).getHuecosJ2().length;u++){
+                            if (lista.get(i).get(k).getHuecosJ2()[u].getSemillas()>=3-u){
+                                H5=H5+5;
+                            }
+                        }
+                        
+                        if(!(lista.get(i).get(k).equals(lista.get(i).get(k).getSuNodo().getPadre().getTablero()))&&
+                                (lista.get(i).get(k).getTurno()==lista.get(i).get(k).getSuNodo().getPadre().getTablero().getTurno())){
+                            H6=100;
+                            
+                        }
+                        
+                        
+                        valor_actual=H1-H2+H3+H4+H5+H6;
                         lista_nivel.add(valor_actual);
                     }
                     
