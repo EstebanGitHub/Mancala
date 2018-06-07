@@ -38,7 +38,8 @@ public class Interfaz_1 extends JFrame  {
 	private Tablero tableroIni;
 	int numFichasIni = 2;
 	JPanelConFondo fondoFinJuego;
-	Color caoba = new Color(95,32,0);
+	Color MORADO_SUAVE = new Color(192,130,192);
+        Color AZUL_APAGADO= new Color(192,192,130);
         boolean fin=false;
         private JTextPane turno,textoTurno, explicaciones;
         private boolean turno_pulsado=false;
@@ -135,14 +136,14 @@ public class Interfaz_1 extends JFrame  {
 		
 		//Colores y bordes
 		
-		fichas1.setBackground(Color.CYAN);
-		fichas2.setBackground(Color.CYAN);
-		fichas3.setBackground(Color.CYAN);
-		fichas4.setBackground(Color.MAGENTA);
-		fichas5.setBackground(Color.MAGENTA);
-		fichas6.setBackground(Color.MAGENTA);
-		fichasJ1.setBackground(Color.CYAN);
-		fichasJ2.setBackground(Color.MAGENTA);
+		fichas1.setBackground(AZUL_APAGADO);
+		fichas2.setBackground(AZUL_APAGADO);
+		fichas3.setBackground(AZUL_APAGADO);
+		fichas4.setBackground(MORADO_SUAVE);
+		fichas5.setBackground(MORADO_SUAVE);
+		fichas6.setBackground(MORADO_SUAVE);
+		fichasJ1.setBackground(AZUL_APAGADO);
+		fichasJ2.setBackground(MORADO_SUAVE);
 		fichas1.setSelectedTextColor(Color.LIGHT_GRAY);
 		fichas1.setOpaque(true);
 		fichas2.setOpaque(true);
@@ -163,8 +164,8 @@ public class Interfaz_1 extends JFrame  {
 		
                 //Poner donde se consiga turno extra o se cambie de turno, es decir en los botones 
 		//y la maquina (Esteban)
-		append(Color.BLACK, "Elige", turno);
-		append(Color.BLACK, "Nada que decir", explicaciones);
+		append(Color.BLACK, "ELIGE", turno);
+		append(Color.BLACK, "NADA", explicaciones);
 		
 		
 		//Hacemos los botones invisibles
@@ -275,7 +276,7 @@ public class Interfaz_1 extends JFrame  {
                 if(tableroIni.getSucesionTurnos().get(tableroIni.getSucesionTurnos().size()-1)
                         ==tableroIni.getSucesionTurnos().get(tableroIni.getSucesionTurnos().size()-2)){
                     explicaciones.setText("");
-                    append(Color.BLACK, "Tienes extra" , explicaciones);
+                    append(Color.BLACK, "TIENES EXTRA" , explicaciones);
                 }else{
                     explicaciones.setText("");
                     append(Color.BLACK, "" , explicaciones);
@@ -324,7 +325,7 @@ public class Interfaz_1 extends JFrame  {
 		if(tableroIni.getSucesionTurnos().get(tableroIni.getSucesionTurnos().size()-1)
                         ==tableroIni.getSucesionTurnos().get(tableroIni.getSucesionTurnos().size()-2)){
                     explicaciones.setText("");
-                    append(Color.BLACK, "Tienes extra" , explicaciones);
+                    append(Color.BLACK, "TIENES EXTRA" , explicaciones);
                 }else{
                     explicaciones.setText("");
                     append(Color.BLACK, "" , explicaciones);
@@ -375,7 +376,7 @@ public class Interfaz_1 extends JFrame  {
                 if(tableroIni.getSucesionTurnos().get(tableroIni.getSucesionTurnos().size()-1)
                         ==tableroIni.getSucesionTurnos().get(tableroIni.getSucesionTurnos().size()-2)){
                     explicaciones.setText("");
-                    append(Color.BLACK, "Tienes extra" , explicaciones);
+                    append(Color.BLACK, "TIENES EXTRA" , explicaciones);
                 }else{
                     explicaciones.setText("");
                     append(Color.BLACK, "" , explicaciones);
@@ -487,12 +488,7 @@ public class Interfaz_1 extends JFrame  {
         
         
         
-	private void cargarImagenes() {
-        Image imagenInterna = new ImageIcon(
-           getClass().getResource("src/Imagenes/Fin_del_Juego_Spidey.png")).getImage();
-		fondoFinJuego.setImagen(imagenInterna);
-
-    }    
+  
 	private boolean reanudable(){
             boolean reanudar=false;
             if(tableroIni.getTurno()==1){
