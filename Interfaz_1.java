@@ -578,7 +578,7 @@ public class Interfaz_1 extends JFrame  {
 				|| tableroIni.todosVaciosJ2(tableroIni.getHuecosJ2()))&&!(reanudable())){
 			fin=true;
 			System.out.println("EL JUEGO SE HA ACABADO");
-                       if(tableroIni.getTurno()==1){//Esto significa que no tiene nada con lo que jugar, todo esta en 2
+                       //Esto significa que no tiene nada con lo que jugar, todo esta en 2
                             int añadir=0;
                             for(int i=0; i<tableroIni.getHuecosJ2().length;i++){
                                 añadir=añadir+tableroIni.getHuecosJ2()[i].getSemillas();
@@ -587,15 +587,15 @@ public class Interfaz_1 extends JFrame  {
                             
                             }
                             tableroIni.getJugador2().setPuntuacion(tableroIni.getJugador2().getPuntuacion()+añadir);
-                       }
-                            else if(tableroIni.getTurno()==2){
-                            int añadir=0;
+                       
+                           
+                            añadir=0;
                             for(int i=0; i<tableroIni.getHuecosJ1().length;i++){
                                 añadir=añadir+tableroIni.getHuecosJ1()[i].getSemillas();
                                 tableroIni.getHuecosJ1()[i].setSemillas(0);
                             }
                             tableroIni.getJugador1().setPuntuacion(tableroIni.getJugador1().getPuntuacion()+añadir);
-                            }
+                            
                 fichas1.setText("");
 		append(Color.BLACK, "" + tableroIni.getHuecosJ1()[0].getSemillas(), fichas1);
 		
