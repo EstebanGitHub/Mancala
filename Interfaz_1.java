@@ -139,7 +139,7 @@ public class Interfaz_1 extends JFrame  {
                 
                 //POSICIONES DE NUESTRAS NUEVAS VARIABLES Y TAMA�O(Esteban)
 		turno.setBounds(250, 400, 100, 40);
-		explicaciones.setBounds(450, 400, 100, 100);
+		explicaciones.setBounds(450, 400, 150, 150);
 		textoTurno.setBounds(30, 400, 230, 40);
 		
 		//Colores y bordes
@@ -577,6 +577,7 @@ public class Interfaz_1 extends JFrame  {
 		if((tableroIni.todosVaciosJ1(tableroIni.getHuecosJ1())
 				|| tableroIni.todosVaciosJ2(tableroIni.getHuecosJ2()))&&!(reanudable())){
 			fin=true;
+                        
 			System.out.println("EL JUEGO SE HA ACABADO");
                        //Esto significa que no tiene nada con lo que jugar, todo esta en 2
                             int añadir=0;
@@ -624,7 +625,13 @@ public class Interfaz_1 extends JFrame  {
                 append(Color.BLACK, "" + tableroIni.getTurno(), turno);
                 
                 explicaciones.setText("");
-                append(Color.BLACK, "SE ACABO", explicaciones);
+                if(tableroIni.getJugador1().getPuntuacion()>tableroIni.getJugador2().getPuntuacion()){
+                    append(Color.BLACK, "GANA EL JUGADOR 1", explicaciones);
+                }else if (tableroIni.getJugador2().getPuntuacion()>tableroIni.getJugador1().getPuntuacion()){
+                    append(Color.BLACK, "GANA EL JUGADOR 2", explicaciones);
+                }else append(Color.BLACK, "EMPATE", explicaciones);
+                
+                
                         
                                                                 
 			

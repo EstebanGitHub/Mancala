@@ -37,7 +37,7 @@ public class Interfaz_2 extends JFrame {
         + "\n" + "\n" + "\n" + "\n" + "--Esta version está pensada para jugar contra la maquina, el jugador humano controla la parte amarilla."
         + "\n" + "\n" + "--Puedes seguir los pasos de la maquina con el boton <siguiente paso>, y reiniciar la partida con <recomenzar>"
         + "\n" + "\n" + "Puedes decidir quien comienza con los botones correspondientes"
-        + "\n" + "\n" + "--Se mostrara <TIENES EXTRA> si el jugador humano tiene un turno extra, <TURNO EXTRA> si lo tiene la maquina. <SE ACABO> cuando finalice el Juego. indicando además al ganador ");
+        + "\n" + "\n" + "--Se mostrara <TIENES EXTRA> si el jugador humano tiene un turno extra, <TURNO EXTRA> si lo tiene la maquina. Cuando el juego acaba, indica al ganador o <EMPATE>");
         
         
         
