@@ -19,7 +19,7 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
-import java.lang.Thread;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +31,8 @@ public class Interfaz_1 extends JFrame  {
         private JButton comienzaJ1;
         private JButton comienzaJ2;
         private JButton boton_paso;
+        private JButton nuevo_comienzo;
+        private JButton reglas;
 	private JTextPane fichas1, fichas2, fichas3, fichas4, fichas5, fichas6;
 	private JTextPane fichasJ1, fichasJ2;
 	private HuecoNeutro huecoFichas1, huecoFichas2, huecoFichas3, 
@@ -69,6 +71,9 @@ public class Interfaz_1 extends JFrame  {
                 comienzaJ1 = new JButton("Empieza el jugador");
                 comienzaJ2 = new JButton("Empieza la CPU");
                 boton_paso= new JButton("Siguiente paso");
+                nuevo_comienzo=new JButton ("Recomenzar");
+                reglas= new JButton("Reglas");
+                
                   
 		huecoFichas1 = new HuecoNeutro(1);
 		huecoFichas2 = new HuecoNeutro(2);
@@ -81,6 +86,7 @@ public class Interfaz_1 extends JFrame  {
 		huecoFichasJ2 = new HuecoNeutro(-1);
 		huecoFichasJ2.setSemillas(0);
 		tableroIni = new Tablero();
+                
 		
                 
                 //INICIALIZAR (Esteban)
@@ -128,6 +134,8 @@ public class Interfaz_1 extends JFrame  {
                 comienzaJ1.setBounds(700, 70, 230, 40);
                 comienzaJ2.setBounds(700, 170, 230, 40);
                 boton_paso.setBounds(700, 270, 230, 40);
+                nuevo_comienzo.setBounds(700, 370, 230, 40);
+                reglas.setBounds(700, 470, 230, 40);
                 
                 //POSICIONES DE NUESTRAS NUEVAS VARIABLES Y TAMA�O(Esteban)
 		turno.setBounds(250, 400, 100, 40);
@@ -221,9 +229,19 @@ public class Interfaz_1 extends JFrame  {
                 comienzaJ2ActionPerformed(evt);
             }
         });
-                           boton_paso.addActionListener(new java.awt.event.ActionListener() {
+                 boton_paso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonPasoActionPerformed(evt);
+            }
+        });
+                 nuevo_comienzo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevoComienzoActionPerformed(evt);
+            }
+        });
+                 reglas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reglasActionPerformed(evt);
             }
         });
 	
@@ -247,6 +265,8 @@ public class Interfaz_1 extends JFrame  {
                 add(comienzaJ1);
                 add(comienzaJ2);
                 add(boton_paso);
+                add(nuevo_comienzo);
+                add(reglas);
 		
 		//A�adir a ventana (Esteban)
 		add(turno);
@@ -483,7 +503,54 @@ public class Interfaz_1 extends JFrame  {
                 finJuego();
                 tableroIni.mostrarTablero();   
                 }
-        } 
+                finJuego();
+        }
+        
+        
+        private void nuevoComienzoActionPerformed(java.awt.event.ActionEvent evt){
+           
+               
+                tableroIni=new Tablero();
+                fin=false;
+                    
+                fichas1.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ1()[0].getSemillas(), fichas1);
+		
+		fichas2.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ1()[1].getSemillas(), fichas2);
+		
+		fichas3.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ1()[2].getSemillas(), fichas3);
+		
+		fichas4.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ2()[0].getSemillas(), fichas4);
+
+		fichas5.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ2()[1].getSemillas(), fichas5);
+		
+		fichas6.setText("");
+		append(Color.BLACK, "" + tableroIni.getHuecosJ2()[2].getSemillas(), fichas6);
+		
+		fichasJ1.setText("");
+		append(Color.BLACK, "" + tableroIni.getJugador1().getPuntuacion(), fichasJ1);
+
+		fichasJ2.setText("");
+		append(Color.BLACK, "" + tableroIni.getJugador2().getPuntuacion(), fichasJ2);
+                
+                turno.setText("");
+                append(Color.BLACK, "ELIGE", turno);
+                
+                explicaciones.setText("");
+		append(Color.BLACK, "NADA", explicaciones);
+             
+        }
+        
+        private void reglasActionPerformed(java.awt.event.ActionEvent evt){
+            Interfaz_2 reglas= new Interfaz_2();
+            
+            reglas.setVisible(true);
+        }
+        
         
         
         
